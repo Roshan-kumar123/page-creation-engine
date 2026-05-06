@@ -9,16 +9,114 @@ const pageModules = import.meta.glob('../data/pages/*.json', { eager: false })
 
 function LoadingSpinner() {
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem', background: '#fff' }}>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #0f172a 0%, #0c1a2e 50%, #0f172a 100%)',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      <style>{`
+        @keyframes pulse-ring {
+          0% { transform: scale(0.8); opacity: 1; }
+          100% { transform: scale(2.2); opacity: 0; }
+        }
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shimmer {
+          0%   { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes dot-bounce {
+          0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+          40%            { transform: translateY(-6px); opacity: 1; }
+        }
+        .splash-orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(80px);
+          pointer-events: none;
+        }
+      `}</style>
+
+      {/* Background orbs */}
+      <div className="splash-orb" style={{ width: '28rem', height: '28rem', background: 'rgba(14,165,233,0.12)', top: '-8rem', left: '-8rem' }} />
+      <div className="splash-orb" style={{ width: '20rem', height: '20rem', background: 'rgba(99,102,241,0.10)', bottom: '-6rem', right: '-4rem' }} />
+
+      {/* Pulse ring behind logo */}
       <div style={{
-        width: '2.5rem', height: '2.5rem',
-        border: '4px solid var(--color-primary, #0ea5e9)',
-        borderTopColor: 'transparent',
+        position: 'absolute',
+        width: '5rem', height: '5rem',
         borderRadius: '50%',
-        animation: 'spin 0.8s linear infinite',
+        background: 'rgba(14,165,233,0.25)',
+        animation: 'pulse-ring 1.8s ease-out infinite',
       }} />
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      <p style={{ color: 'var(--color-muted, #64748b)', fontSize: '0.875rem', fontWeight: 500 }}>Loading page…</p>
+
+      {/* Logo mark */}
+      <div style={{
+        position: 'relative',
+        width: '4rem', height: '4rem',
+        borderRadius: '1rem',
+        background: 'linear-gradient(135deg, #0ea5e9, #6366f1)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        boxShadow: '0 0 40px rgba(14,165,233,0.4)',
+        marginBottom: '1.75rem',
+        animation: 'fade-up 0.5s ease both',
+      }}>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+        </svg>
+      </div>
+
+      {/* Wordmark */}
+      <div style={{ animation: 'fade-up 0.5s 0.1s ease both', opacity: 0, marginBottom: '0.5rem' }}>
+        <span style={{
+          fontSize: '1.375rem',
+          fontWeight: 800,
+          letterSpacing: '-0.02em',
+          background: 'linear-gradient(90deg, #e2e8f0 0%, #94a3b8 40%, #e2e8f0 60%, #94a3b8 100%)',
+          backgroundSize: '200% auto',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          animation: 'shimmer 2.5s linear infinite',
+          fontFamily: "'Inter', sans-serif",
+        }}>
+          Whilter.ai
+        </span>
+      </div>
+
+      {/* Tagline */}
+      <p style={{
+        color: '#475569',
+        fontSize: '0.8125rem',
+        fontWeight: 500,
+        letterSpacing: '0.06em',
+        textTransform: 'uppercase',
+        animation: 'fade-up 0.5s 0.2s ease both',
+        opacity: 0,
+        marginBottom: '2.5rem',
+        fontFamily: "'Inter', sans-serif",
+      }}>
+        Page Creation Engine
+      </p>
+
+      {/* Loading dots */}
+      <div style={{ display: 'flex', gap: '0.5rem', animation: 'fade-up 0.5s 0.3s ease both', opacity: 0 }}>
+        {[0, 1, 2].map(i => (
+          <div key={i} style={{
+            width: '0.4rem', height: '0.4rem',
+            borderRadius: '50%',
+            background: '#0ea5e9',
+            animation: `dot-bounce 1.2s ${i * 0.15}s ease-in-out infinite`,
+          }} />
+        ))}
+      </div>
     </div>
   )
 }
