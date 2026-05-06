@@ -1,0 +1,161 @@
+{
+  "page_metadata": {
+    "title": "Whilter.ai — JSON-Driven Page Creation Engine",
+    "slug": "home",
+    "pageType": "landing"
+  },
+  "blocks": [
+    {
+      "type": "hero",
+      "props": {
+        "headline": "Pages from JSON. Rendered instantly.",
+        "accentWord": "instantly",
+        "subheadline": "Whilter.ai's Page Creation Engine turns a single JSON file into a fully validated, themed, production-ready web page — no backend, no CMS, no waiting.",
+        "primaryCTA": { "label": "Try Live Demo", "href": "/demo" },
+        "secondaryCTA": { "label": "See How It Works", "href": "#how-it-works" },
+        "trustBadges": [
+          "Zero backend required",
+          "3 design systems built in",
+          "Zod-validated schemas"
+        ]
+      }
+    },
+    {
+      "type": "feature_card",
+      "props": {
+        "sectionLabel": "How It Works",
+        "heading": "Three steps from JSON to live page",
+        "subheading": "No deploy pipeline. No CMS login. No waiting for a developer. Just paste, validate, and render.",
+        "features": [
+          {
+            "number": 1,
+            "icon": "📋",
+            "title": "Paste Your JSON",
+            "description": "Drop a JSON object into the Live Editor on the /demo route. Define page_metadata (title, slug, pageType) and a blocks array with type and props per block."
+          },
+          {
+            "number": 2,
+            "icon": "✅",
+            "title": "Engine Validates",
+            "description": "Zod's discriminated union schema inspects every field in real time. If a required prop is missing or the wrong type, you see the exact error path before anything renders."
+          },
+          {
+            "number": 3,
+            "icon": "⚡",
+            "title": "Instant UI Rendering",
+            "description": "The Component Registry maps each block type to a lazy-loaded React component. The page renders live — animations, theme, and all — within milliseconds of your last keystroke."
+          }
+        ]
+      }
+    },
+    {
+      "type": "stats_row",
+      "props": {
+        "heading": "Built for speed. Designed for scale.",
+        "stats": [
+          {
+            "value": "7",
+            "label": "Block Types",
+            "description": "Hero, Cards, Stats, FAQ, Table, Testimonials, CTA"
+          },
+          {
+            "value": "3",
+            "label": "Design Systems",
+            "description": "Startup, Enterprise Sharp, Creative Soft — swap instantly"
+          },
+          {
+            "value": "0ms",
+            "label": "Backend Latency",
+            "description": "Fully static — served from CDN, no server required"
+          },
+          {
+            "value": "100%",
+            "label": "Schema Coverage",
+            "description": "Every block type strictly validated with Zod discriminated unions"
+          }
+        ]
+      }
+    },
+    {
+      "type": "rich_data_grid",
+      "props": {
+        "heading": "Whilter.ai vs. Traditional Approaches",
+        "caption": "Capability comparison based on architectural requirements, not marketing claims.",
+        "columns": ["Capability", "Whilter.ai Engine", "Headless CMS", "Traditional CMS"],
+        "rows": [
+          ["JSON-driven schema",       "✅ Discriminated union",      "⚠️ Partial (content types)", "❌ Not supported"],
+          ["Real-time live editor",    "✅ Split-screen + validation", "❌ Requires deploy",         "❌ Requires deploy"],
+          ["Global theme switching",   "✅ 3 systems, instant swap",  "❌ Not available",            "⚠️ CSS override only"],
+          ["Lazy-loaded components",   "✅ React.lazy per block",     "❌ Not applicable",           "❌ Not applicable"],
+          ["Zero backend required",    "✅ Pure static frontend",     "❌ API server required",      "❌ Server required"],
+          ["Mobile preview in editor", "✅ Built-in 375px toggle",    "❌ Not available",            "⚠️ Browser DevTools"],
+          ["Zod validation layer",     "✅ Strict, per block type",   "❌ Not applicable",           "❌ Not applicable"]
+        ]
+      }
+    },
+    {
+      "type": "faq_accordion",
+      "props": {
+        "heading": "Frequently Asked Questions",
+        "faqs": [
+          {
+            "question": "What exactly is the Page Creation Engine?",
+            "answer": "It is a purely frontend system built on Vite, React, and React Router. You write a JSON file that follows a strict Zod schema. The engine dynamically imports that file at runtime, validates it, and maps each block in the blocks array to a lazy-loaded React component from a registry. The result is a fully rendered, animated, themed web page with zero backend involvement."
+          },
+          {
+            "question": "How do I create a new page?",
+            "answer": "Add a file at src/data/pages/your-slug.json following the schema. Navigate to /your-slug in the browser. Vite's import.meta.glob pre-registers all JSON files in that directory at build time, so the catch-all router picks it up automatically — no router changes, no redeploys."
+          },
+          {
+            "question": "How does the Theme Engine work?",
+            "answer": "The ThemeContext injects CSS custom properties (--color-primary, --radius-card, --font-heading, etc.) directly onto document.documentElement whenever you switch themes. Every block component references these variables through inline styles. No props are threaded — adding a new block automatically inherits the active theme."
+          },
+          {
+            "question": "How do I add a new block type?",
+            "answer": "Three steps: (1) Create the JSX component in src/components/blocks/. (2) Add its Zod object schema to the discriminatedUnion array in pageSchema.js. (3) Add one line to registry.js mapping the type string to a React.lazy() import. That block is now available in any page JSON."
+          },
+          {
+            "question": "Is this production-ready?",
+            "answer": "Yes. npm run build produces a fully static dist/ folder. Each block component becomes its own async chunk via Rollup, so users only download what a given page needs. The import.meta.glob pattern gives Rollup a static manifest at build time — no runtime surprises. Deploy to any CDN (Vercel, Netlify, CloudFront) with zero configuration."
+          }
+        ]
+      }
+    },
+    {
+      "type": "testimonial",
+      "props": {
+        "heading": "What engineering leaders are saying",
+        "testimonials": [
+          {
+            "quote": "We replaced a six-month CMS migration with a JSON schema and a weekend sprint. The theme engine matched our brand guidelines exactly — without touching a single CSS file.",
+            "author": "Priya Mehta",
+            "title": "Head of Digital",
+            "company": "Asian Paints"
+          },
+          {
+            "quote": "The discriminated union validation was the key insight. Our content team can now edit JSON confidently — if the schema rejects a field, they see the exact path and message immediately.",
+            "author": "Daniel Osei",
+            "title": "Principal Engineer",
+            "company": "Microsoft Azure"
+          },
+          {
+            "quote": "Switching from Enterprise Sharp to Creative Soft in the demo took three seconds. That's when our CEO said 'ship it.' Pure client-side theming is a genuine superpower.",
+            "author": "Sarah Lindqvist",
+            "title": "VP Product",
+            "company": "Nordev"
+          }
+        ]
+      }
+    },
+    {
+      "type": "cta_banner",
+      "props": {
+        "heading": "See it live in 30 seconds.",
+        "subtext": "Open the Live Demo, load a template, switch the theme, and watch pages render in real time. No signup. No backend. No waiting.",
+        "buttonLabel": "Open Live Demo",
+        "buttonHref": "/demo",
+        "variant": "brand"
+      }
+    }
+  ]
+}
