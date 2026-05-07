@@ -35,6 +35,17 @@ const INITIAL_JSON = JSON.stringify({
   ],
 }, null, 2)
 
+function decodeDataParam() {
+  try {
+    const params = new URLSearchParams(window.location.search)
+    const raw = params.get('data')
+    if (!raw) return null
+    return JSON.stringify(JSON.parse(decodeURIComponent(escape(atob(raw)))), null, 2)
+  } catch {
+    return null
+  }
+}
+
 function StatusBar({ parsed }) {
   if (parsed.status === 'ok') {
     return (
@@ -60,7 +71,7 @@ function StatusBar({ parsed }) {
 
 export default function DemoPage() {
   const { themeKey, setThemeKey } = useTheme()
-  const [json, setJson] = useState(INITIAL_JSON)
+  const [json, setJson] = useState(() => decodeDataParam() ?? INITIAL_JSON)
   const [presentMode, setPresentMode] = useState(false)
   const [deviceMode, setDeviceMode] = useState('desktop')
   const [templateKey, setTemplateKey] = useState('')
