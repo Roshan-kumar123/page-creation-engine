@@ -184,6 +184,32 @@ export default function DemoPage() {
           ))}
         </div>
 
+        {/* View Full Preview */}
+        <button
+          disabled={parsed.status !== 'ok'}
+          onClick={() => {
+            try {
+              const encoded = encodeURIComponent(btoa(unescape(encodeURIComponent(json))))
+              window.open('/preview?data=' + encoded, '_blank')
+            } catch {
+              alert('Could not encode the current JSON.')
+            }
+          }}
+          style={{
+            padding: '0.375rem 1rem', fontSize: '0.8125rem', fontWeight: 700,
+            background: 'transparent',
+            color: parsed.status === 'ok' ? '#0ea5e9' : '#475569',
+            border: `1px solid ${parsed.status === 'ok' ? '#0ea5e9' : '#334155'}`,
+            borderRadius: '0.375rem',
+            cursor: parsed.status === 'ok' ? 'pointer' : 'not-allowed',
+            whiteSpace: 'nowrap',
+            opacity: parsed.status === 'ok' ? 1 : 0.5,
+            transition: 'all 0.15s',
+          }}
+        >
+          View Full Page ↗
+        </button>
+
         {/* Presentation Toggle */}
         <button
           onClick={() => setPresentMode(p => !p)}
