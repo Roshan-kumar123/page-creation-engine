@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function SmartLink({ href, className, style, children }) {
+function SmartLink({ href, className, style, children, onClick }) {
   const isInternal = href && href.startsWith('/')
   if (isInternal) {
-    return <Link to={href} className={className} style={style}>{children}</Link>
+    return <Link to={href} className={className} style={style} onClick={onClick}>{children}</Link>
   }
-  return <a href={href} className={className} style={style}>{children}</a>
+  return <a href={href} className={className} style={style} onClick={onClick}>{children}</a>
 }
 
 export default function HeroBlock({
@@ -71,6 +71,10 @@ export default function HeroBlock({
               color: 'var(--color-primary-dark, #0284c7)',
               borderRadius: 'var(--radius-btn, 9999px)',
             }}
+            onClick={['#', '#demo'].includes(primaryCTA.href) ? (e) => {
+              e.preventDefault()
+              window.location.href = window.location.href.replace('/preview', '/demo')
+            } : undefined}
           >
             {primaryCTA.label} →
           </SmartLink>
